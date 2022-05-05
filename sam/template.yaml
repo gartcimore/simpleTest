@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  sendMessage:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda.handler
+      FunctionName: 'angularHandler'
+      Runtime: nodejs14.x
+      CodeUri: '..'
+      Timeout: 200000
+      Environment:
+        Variables:
+          ENVIRONMENT: dev
+          SAM_LOCAL: true
