@@ -10,7 +10,13 @@
     "dev:ssr": "ng run simpleTest:serve-ssr",
     "serve:ssr": "node dist/simpleTest/server/main.js",
     "build:ssr": "ng build && ng run simpleTest:server",
-    "prerender": "ng run simpleTest:prerender"
+    "build:production": "ng build && ng run themis:server && cp lambda.js ./dist",
+    "prerender": "ng run simpleTest:prerender",
+    "clean": "rm -rf dist",
+    "precompress_for_manual_upload": "rm -rf node_modules && npm ci --only=prod --no-progress",
+    "compress_dist": "zip -rFS sam/deploy.zip dist/* node_modules",
+    "start:sam": "sam local start-lambda",
+    "lambda": "cd sam && sam local invoke angularHandler"
   },
   "private": true,
   "dependencies": {
