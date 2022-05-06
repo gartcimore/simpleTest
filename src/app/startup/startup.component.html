@@ -1,0 +1,80 @@
+<!--<p>startup works!</p>-->
+
+<div class="container">
+  <h1>Welcome Form</h1>
+
+  <div class="form-group">
+    <label for="deploymentId">Deployment ID</label>
+    <select (change)="onChange($event)" class="form-control" [(ngModel)]="chatConfig.deploymentID" name="deploymentID">
+      <option value="e3d2c863-1f8a-4f30-9f31-ebd0c738cb74">OKTA Auth</option>
+      <option value="b8dbcfb4-9e3e-4cf3-a2d2-c458825b4c5d">Ranjith OKTA Auth</option>
+      <option value="22f88f57-e827-47ad-8880-2f870585dd04">Google Auth</option>
+      <option value="973a34b4-b50e-4094-98b7-3cd7881694f5">Bill OKTA Auth</option>
+      <option value="7322597b-802e-4159-ab03-d9a5873b5438">None Auth</option>
+      <option value="0d1a65a6-be58-49ad-81b0-d9ed15f6969e">Laurent R None Auth</option>
+    </select><br/>
+    <input type="text" class="form-control" id="deploymentId" required
+           [(ngModel)]="chatConfig.deploymentID" name="deploymentID">
+
+  </div>
+
+  <form *ngIf="showAuthConfig" (ngSubmit)="auth()">
+    <div class="form-group" *ngIf="showAuthConfig">
+
+      <div class="form-group">
+        <label for="token">Client ID</label>
+        <input type="text" class="form-control" id="clientId"
+               autocomplete="off" [(ngModel)]="clientId" name="clientId">
+      </div>
+
+      <div class="form-group">
+        <label for="token">Discovery Document URI</label>
+        <input type="text" class="form-control" id="discoveryUri"
+               autocomplete="off" [(ngModel)]="discoveryUri" name="discoveryUri">
+      </div>
+    </div>
+    <button [disabled]="!clientId || !discoveryUri" type="submit" class="btn btn-success">Authenticate</button>
+  </form>
+  <div class="form-group" *ngIf="chatConfig.genesysJwt">
+    <label for="token">Genesys JWT</label>
+    <input type="text" class="form-control" id="genesysJwt"
+           autocomplete="off" [(ngModel)]="chatConfig.genesysJwt" name="genesysJwt" disabled readonly>
+  </div>
+  <br/>
+  <button (click)="showAuthConfig=!showAuthConfig">Show/Hide Auth Config</button>
+  <br/>
+  <form (ngSubmit)="onSubmit()">
+
+
+    <div class="form-group">
+      <label for="wssUri">WSS URI</label>
+      <input type="text" class="form-control" id="wssUri" value="wss://webmessaging.inindca.com/v1" required
+             [(ngModel)]="chatConfig.wssUri" name="wssUri">
+    </div>
+
+    <div class="form-group">
+      <label for="token">Token</label>
+      <input type="text" class="form-control" id="token"
+             [(ngModel)]="chatConfig.token" name="token">
+    </div>
+
+    <div class="form-group">
+      <label for="hashedToken">Hashed Token</label>
+      <input type="text" class="form-control" id="hashedToken"
+             [(ngModel)]="chatConfig.hashedToken" name="hashedToken">
+    </div>
+
+    <div class="form-group">
+      <label for="resumeToken">Resume Token</label>
+      <input type="text" class="form-control" id="resumeToken"
+             [(ngModel)]="chatConfig.resumeToken" name="resumeToken">
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+
+  <div>
+    <h2>Chat Settings:</h2>
+    {{config}}
+  </div>
+</div>
